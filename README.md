@@ -17,7 +17,7 @@ argocd app set platform-bootstrap --sync-policy automated --self-heal
 
 ## Configuration
 
-Each cluster add is configured as follows. Each addon specifies 3 charts, one for each type of cluster.
+Each cluster addon is configured as follows. Each addon specifies 3 charts, one for each type of cluster.
 
 ```
 ├── addons
@@ -49,3 +49,28 @@ helm dependency build ./addons/ingress-nginx/dev
 helm template test1 ./addons/ingress-nginx/dev | yq .
 ```
 
+### ArgoCD integration
+
+It's possible to support different categories of cluster by installing using one of the following directories, containing two ArgoCD files. One to create the encapsulating [Project](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects) and the other to generate applications, the [ApplicationSet](https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/)
+
+```
+└── projects
+    ├── dev
+    │   ├── applicationset.yaml
+    │   └── project.yaml
+    ├── nonprod
+    │   ├── applicationset.yaml
+    │   └── project.yaml
+    └── prod
+        ├── applicationset.yaml
+        └── project.yaml
+```
+
+Services are installed into a target instance of ArgoCD by creating a bootstrap application, with the "path" set appropriately:
+
+```
+argocd app create platform-bootstrap \
+   --repo  https://github.com/myspotontheweb/gitops-platform-demo.git \
+   --path projects/prod \
+   ..
+```
