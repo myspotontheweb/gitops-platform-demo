@@ -35,17 +35,17 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: '{{ path[0] }}'
-      name: platform-dev-{{ path[0] }}
+        app.kubernetes.io/name: '{{path[1]}}'
+      name: platform-dev-{{path[1]}}
     spec:
-      project: "my-project"
+      project: "platform-dev"
       source:
         repoURL: https://github.com/myspotontheweb/gitops-platform-demo.git
         targetRevision: HEAD
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{path.basename}}'
+        namespace: '{{path[1]}}'
       syncPolicy:
         automated:
           prune: true
