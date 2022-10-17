@@ -7,7 +7,7 @@ Create a bootstrap application to install the platform services. Note that path 
 
 ```
 argocd app create platform-bootstrap \
-   --repo  https://github.com/myspotontheweb/gitops-platform-demo.git \
+   --repo https://github.com/myspotontheweb/gitops-platform-demo.git \
    --path projects/dev \
    --dest-server https://kubernetes.default.svc \
    --dest-namespace argocd
