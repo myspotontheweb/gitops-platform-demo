@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: platform-nonprod
+  name: nonprod-platform
   namespace: argocd
 spec:
   generators:
@@ -13,11 +13,9 @@ spec:
       - path: addons/**/nonprod
   template:
     metadata:
-      labels:
-        app.kubernetes.io/name: '{{path[1]}}'
-      name: platform-nonprod-{{path[1]}}
+      name: nonprod-platform-{{path[1]}}
     spec:
-      project: "platform-nonprod"
+      project: "nonprod-platform"
       source:
         repoURL: https://github.com/myspotontheweb/gitops-platform-demo.git
         targetRevision: HEAD
