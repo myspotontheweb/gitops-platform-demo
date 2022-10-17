@@ -1,29 +1,8 @@
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: platform-dev
-  namespace: argocd
-  # Finalizer that ensures that project is not deleted until it is not referenced by any application
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
-  description: platform-dev project
-  destinations:
-  - namespace: '*'
-    server: '*'
-  namespaceResourceWhitelist:
-  - group: '*'
-    kind: '*'
-  sourceRepos:
-  - '*'
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: platform-dev
+  name: platform-prod
   namespace: argocd
 spec:
   generators:
@@ -31,14 +10,14 @@ spec:
       repoURL: https://github.com/myspotontheweb/gitops-platform-demo.git
       revision: HEAD
       directories:
-      - path: addons/**/dev
+      - path: addons/**/prod
   template:
     metadata:
       labels:
         app.kubernetes.io/name: '{{path[1]}}'
-      name: platform-dev-{{path[1]}}
+      name: platform-prod-{{path[1]}}
     spec:
-      project: "platform-dev"
+      project: "platform-prod"
       source:
         repoURL: https://github.com/myspotontheweb/gitops-platform-demo.git
         targetRevision: HEAD

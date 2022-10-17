@@ -1,0 +1,33 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: platform-nonprod
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/myspotontheweb/gitops-platform-demo.git
+      revision: HEAD
+      directories:
+      - path: addons/**/nonprod
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: '{{path[1]}}'
+      name: platform-nonprod-{{path[1]}}
+    spec:
+      project: "platform-nonprod"
+      source:
+        repoURL: https://github.com/myspotontheweb/gitops-platform-demo.git
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path[1]}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
