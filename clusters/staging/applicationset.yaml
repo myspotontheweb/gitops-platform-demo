@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: nonprod-platform
+  name: platform
   namespace: argocd
 spec:
   generators:
@@ -10,12 +10,13 @@ spec:
       repoURL: https://github.com/myspotontheweb/gitops-platform-demo.git
       revision: HEAD
       directories:
-      - path: addons/**/nonprod
+      - path: addons/**/common
+      - path: addons/**/staging
   template:
     metadata:
-      name: nonprod-platform-{{path[1]}}
+      name: platform-{{path[1]}}
     spec:
-      project: "nonprod-platform"
+      project: "platform"
       source:
         repoURL: https://github.com/myspotontheweb/gitops-platform-demo.git
         targetRevision: HEAD
