@@ -51,12 +51,12 @@ A helm chart can be tested as follows
 #
 # Download chart dependencies
 #
-helm dependency build ./addons/ingress-nginx/dev
+helm dependency build ./addons/ingress-nginx/common
 
 #
 # Generate the YAML
 #
-helm template test1 ./addons/ingress-nginx/dev | yq .
+helm template test1 ./addons/ingress-nginx/common | yq .
 ```
 
 ### ArgoCD integration
