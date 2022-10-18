@@ -56,12 +56,6 @@ This is typically what how an addon is configured for a particular environment
             └── values.yaml
 ```
 
-Three files are used.
-
-1. Chart.yaml
-1. Chart.lock
-1. value.yaml
-
 Instead of defining templates the functional helm chart is declared as a dependency, in the file [Chart.yaml](https://github.com/myspotontheweb/gitops-platform-demo/blob/main/addons/ingress-nginx/common/Chart.yaml)
 This enanbles us to control which version of the chart is running on the target environment.
 
