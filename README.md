@@ -8,7 +8,7 @@ Create a bootstrap application to install the platform services. Note the path s
 ```
 argocd app create platform-bootstrap \
    --repo https://github.com/myspotontheweb/gitops-platform-demo.git \
-   --path clusters/dev \
+   --path environments/dev \
    --dest-server https://kubernetes.default.svc \
    --dest-namespace argocd
 
@@ -33,7 +33,7 @@ Each cluster addon is configured as follows. Each addon specifies 3 charts, one 
             └── ..
 ```
 
-or alternatively if the same chart is to be installed on all clusters
+or alternatively if the same chart is to be installed on all environments
 
 ```
 ├── addons
@@ -61,12 +61,12 @@ helm template test1 ./addons/ingress-nginx/common | yq .
 
 ### ArgoCD integration
 
-It's possible to support different clusters by creating using one of the following directories, containing two ArgoCD files.w
+It's possible to support different environments by creating using one of the following directories, containing two ArgoCD files.w
 One to create the encapsulating [Project](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects)
 and the other to generate applications, the [ApplicationSet](https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/)
 
 ```
-└── clusters
+└── environments
     ├── dev
     │   ├── applicationset.yaml
     │   └── project.yaml
@@ -83,6 +83,6 @@ Services are installed into a target instance of ArgoCD by creating a bootstrap 
 ```
 argocd app create platform-bootstrap \
    --repo https://github.com/myspotontheweb/gitops-platform-demo.git \
-   --path clusters/prod \
+   --path environments/prod \
    ..
 ```
