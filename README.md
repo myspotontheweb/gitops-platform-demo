@@ -43,6 +43,45 @@ or alternatively if the same chart is to be installed on all environments
             └── ..
 ```
 
+### Keeping configuration DRY
+
+This is typically what how an addon is configured for a particular environment
+
+```
+├── addons
+    └── ingress-nginx
+        ├── dev
+            ├── Chart.yaml
+            ├── Chart.lock
+            └── values.yaml
+```
+
+Three files are used.
+
+1. Chart.yaml
+1. Chart.lock
+1. value.yaml
+
+Instead of defining templates the functional helm chart is declared as a dependency, in the file [Chart.yaml](https://github.com/myspotontheweb/gitops-platform-demo/blob/main/addons/ingress-nginx/common/Chart.yaml)
+This enanbles us to control which version of the chart is running on the target environment.
+
+```
+apiVersion: v2
+name: ingress-nginx
+description: Install the nginx ingress controller
+type: application
+version: 4.3.0
+appVersion: "1.4.0"
+
+dependencies:
+  - name: ingress-nginx
+    repository: https://kubernetes.github.io/ingress-nginx
+    version: 4.3.0
+```
+
+The Chart.lock file contains the checksum for the downloaded chart, as a security measure. 
+Lastly the values.yaml file contains any chart value overrides for this environment install.
+
 ### Testing the helm charts
 
 A helm chart can be tested as follows
