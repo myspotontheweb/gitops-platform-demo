@@ -3,12 +3,12 @@ This is a demo repo to showcase how to manage the standard services running on a
 
 ## Usage
 
-Create a bootstrap application to install the platform services. Note that path is installing the "dev" services
+Create a bootstrap application to install the platform services. Note the path setting will install services for the dev cluster
 
 ```
 argocd app create platform-bootstrap \
    --repo https://github.com/myspotontheweb/gitops-platform-demo.git \
-   --path projects/dev \
+   --path clusters/dev \
    --dest-server https://kubernetes.default.svc \
    --dest-namespace argocd
 
@@ -25,10 +25,20 @@ Each cluster addon is configured as follows. Each addon specifies 3 charts, one 
         ├── dev
         │   ├── Chart.yaml
         │   └── ..
-        ├── nonprod
+        ├── staging
         │   ├── Chart.yaml
         │   └── ..
         └── prod
+            ├── Chart.yaml
+            └── ..
+```
+
+or alternatively if the same chart is to be installed on all clusters
+
+```
+├── addons
+    └── ingress-nginx
+        └── common
             ├── Chart.yaml
             └── ..
 ```
@@ -51,14 +61,16 @@ helm template test1 ./addons/ingress-nginx/dev | yq .
 
 ### ArgoCD integration
 
-It's possible to support different categories of cluster by installing using one of the following directories, containing two ArgoCD files. One to create the encapsulating [Project](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects) and the other to generate applications, the [ApplicationSet](https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/)
+It's possible to support different clusters by creating using one of the following directories, containing two ArgoCD files.w
+One to create the encapsulating [Project](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects)
+and the other to generate applications, the [ApplicationSet](https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/)
 
 ```
-└── projects
+└── clusters
     ├── dev
     │   ├── applicationset.yaml
     │   └── project.yaml
-    ├── nonprod
+    ├── staging
     │   ├── applicationset.yaml
     │   └── project.yaml
     └── prod
@@ -70,7 +82,7 @@ Services are installed into a target instance of ArgoCD by creating a bootstrap 
 
 ```
 argocd app create platform-bootstrap \
-   --repo  https://github.com/myspotontheweb/gitops-platform-demo.git \
-   --path projects/prod \
+   --repo https://github.com/myspotontheweb/gitops-platform-demo.git \
+   --path clsuters/prod \
    ..
 ```
