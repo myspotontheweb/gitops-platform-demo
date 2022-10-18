@@ -83,6 +83,6 @@ Services are installed into a target instance of ArgoCD by creating a bootstrap 
 ```
 argocd app create platform-bootstrap \
    --repo https://github.com/myspotontheweb/gitops-platform-demo.git \
-   --path clsuters/prod \
+   --path clusters/prod \
    ..
 ```
