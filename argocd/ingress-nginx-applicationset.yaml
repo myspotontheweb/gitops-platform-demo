@@ -1,0 +1,27 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ingress-nginx
+  namespace: argocd
+spec:
+  generators:
+  - clusters: {}
+  template:
+    metadata:
+      name: 'ingress-nginx-{{name}}'
+    spec:
+      project: platform
+      source:
+        repoURL: https://github.com/myspotontheweb/gitops-platform-demo.git
+        targetRevision: HEAD
+        path: apps/ingress-nginx
+      destination:
+        name: '{{name}}'
+        namespace: ingress-nginx
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
