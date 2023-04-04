@@ -8,7 +8,7 @@ This is a demo repo to showcase how to manage the standard services running on a
 
 Setup [Arkade](https://arkade.dev)
 
-```
+```bash
 #
 # Download script
 #
@@ -22,7 +22,7 @@ echo 'PATH=$PATH:~/.arkade/bin' >> ~/.bashrc
 
 Install tools needed for demo
 
-```
+```bash
 ark get kubectl kubectx kubens helm yq jq minikube argocd
 ```
 
@@ -30,13 +30,13 @@ ark get kubectl kubectx kubens helm yq jq minikube argocd
 
 Start a minikube cluster
 
-```
+```bash
 minikube start --driver=kvm2
 ```
 
 Perform a core install of ArgoCD
 
-```
+```bash
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/core-install.yaml
 ```
@@ -45,14 +45,14 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 
 Login
 
-```
+```bash
 kubectl config set-context --current --namespace argocd
 argocd login --core
 ```
 
 Create a bootstrap application to install the platform services. Note the path setting will install services for the dev cluster
 
-```
+```bash
 argocd app create platform-bootstrap \
    --repo https://github.com/myspotontheweb/gitops-platform-demo.git \
    --path argocd \
@@ -64,7 +64,7 @@ argocd app set platform-bootstrap --sync-policy automated --self-heal
 
 Run the dashboard locally
 
-```
+```bash
 argocd admin dashboard
 ```
 
@@ -75,7 +75,7 @@ Argo CD UI is available at http://localhost:8080
 
 Each cluster application is configure using helm
 
-```
+```bash
 apps
 └── ingress-nginx
     └── Chart.yaml
@@ -83,7 +83,7 @@ apps
 
 Each helm chart specifies what should be installed using dependencies as follows:
 
-```
+```yaml
 apiVersion: v2
 name: ingress-nginx
 description: Install the nginx ingress controller
@@ -102,7 +102,7 @@ dependencies:
 
 A helm chart can be tested as follows
 
-```
+```bash
 #
 # Download chart dependencies
 #
