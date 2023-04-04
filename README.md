@@ -23,7 +23,7 @@ echo 'PATH=$PATH:~/.arkade/bin' >> ~/.bashrc
 Install tools needed for demo
 
 ```
-ark get kubectl helm yq argocd 
+ark get kubectl kubectx kubens helm yq jq argocd
 ```
 
 ## Cluster installation 
@@ -42,6 +42,13 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 ```
 
 # Usage
+
+Login
+
+```
+kubectl config set-context --current --namespace argocd
+argocd login --core
+```
 
 Create a bootstrap application to install the platform services. Note the path setting will install services for the dev cluster
 
