@@ -23,15 +23,15 @@ echo 'PATH=$PATH:~/.arkade/bin' >> ~/.bashrc
 Install tools needed for demo
 
 ```bash
-ark get kubectl kubectx kubens helm yq jq minikube argocd
+ark get kubectl kubectx kubens helm yq jq k3d argocd
 ```
 
 ## Cluster installation 
 
-Start a minikube cluster
+Start a k3d cluster
 
 ```bash
-minikube start --driver=kvm2
+k3d cluster create maincluster --k3s-arg "--disable=traefik@server:0"
 ```
 
 Perform a core install of ArgoCD
