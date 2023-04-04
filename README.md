@@ -23,7 +23,7 @@ echo 'PATH=$PATH:~/.arkade/bin' >> ~/.bashrc
 Install tools needed for demo
 
 ```
-ark get kubectl kubectx kubens helm yq jq argocd
+ark get kubectl kubectx kubens helm yq jq minikube argocd
 ```
 
 ## Cluster installation 
