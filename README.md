@@ -70,6 +70,28 @@ argocd admin dashboard
 
 Argo CD UI is available at http://localhost:8080
 
+## Add a second cluster to ArgoCD
+
+Add the following entry to the /etc/hosts file
+
+```bash
+0.0.0.0 host.k3d.internal
+```
+
+Create a second k3d cluster
+
+```bash
+k3d cluster create secondcluster --k3s-arg "--tls-san=host.k3d.internal@server:0" --k3s-arg "--disable=traefik@server:0" --kubeconfig-switch-context=false
+```
+
+Add this to ArgoCD
+
+```bash
+k3d kubeconfig get secondcluster | sed 's/0.0.0.0/host.k3d.internal/' | tee secondcluster.yaml
+argocd cluster add k3d-secondcluster --kubeconfig secondcluster.yaml --yes
+```
+
+Observe how applications are automatically installed onto the second cluster
 
 # Configuration
 
