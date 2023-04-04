@@ -9,14 +9,7 @@ This is a demo repo to showcase how to manage the standard services running on a
 Setup [Arkade](https://arkade.dev)
 
 ```bash
-#
-# Download script
-#
 curl -sLS https://get.arkade.dev | sudo sh
-
-#
-# Update path
-#
 echo 'PATH=$PATH:~/.arkade/bin' >> ~/.bashrc
 ```
 
