@@ -1,0 +1,27 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  generators:
+  - clusters: {}
+  template:
+    metadata:
+      name: 'cert-manager-{{name}}'
+    spec:
+      project: platform
+      source:
+        repoURL: https://github.com/myspotontheweb/gitops-platform-demo.git
+        targetRevision: HEAD
+        path: apps/cert-manager
+      destination:
+        name: '{{name}}'
+        namespace: cert-manager
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true

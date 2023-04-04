@@ -62,6 +62,15 @@ argocd app create platform-bootstrap \
 argocd app set platform-bootstrap --sync-policy automated --self-heal
 ```
 
+Run the dashboard locally
+
+```
+argocd admin dashboard
+```
+
+Argo CD UI is available at http://localhost:8080
+
+
 # Configuration
 
 Each cluster application is configure using helm
