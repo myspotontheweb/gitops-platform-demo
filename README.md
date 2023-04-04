@@ -4,6 +4,36 @@ This is a demo repo to showcase how to manage the standard services running on a
 
 # Setup
 
+## Software installation
+
+Setup [Arkade](https://arkade.dev)
+
+```
+#
+# Download script
+#
+curl -sLS https://get.arkade.dev | sudo sh
+
+#
+# Update path
+#
+echo 'PATH=$PATH:~/.arkade/bin' >> ~/.bashrc
+```
+
+Install tools needed for demo
+
+```
+ark get kubectl helm yq argocd 
+```
+
+## Cluster installation 
+
+Start a minikube cluster
+
+```
+minikube start --driver=kvm2
+```
+
 Perform a core install of ArgoCD
 
 ```
