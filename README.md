@@ -27,7 +27,7 @@ Start a k3d cluster
 k3d cluster create maincluster --k3s-arg "--disable=traefik@server:0"
 ```
 
-Perform a core install of ArgoCD
+Perform a core install of [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd)
 
 ```bash
 kubectl create namespace argocd
